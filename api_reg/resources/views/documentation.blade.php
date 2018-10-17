@@ -29,6 +29,13 @@
                    
                     <div class="clearfix"></div>
                   </div>
+                  <div class="pull-right">
+                  @if(Auth::user()->isAdmin())
+                          <a class="btn btn-default " style=" border-radius:5px" href="#" role="button">Create New API</a>
+                                        
+                          
+                          @endif
+                  </div>
                   <div xclass="x_content">
                     <p class="text-muted font-13 m-b-30">
                     <div id="loading"></div>
@@ -37,25 +44,26 @@
                    
 
                     </div>
-                        <div class="container">
-                          <div class="pricing-table pricing-three-column row">
+                <div class="container">
+                    <div >
                           <div class="row tile_count" id="tile" >
-                      @foreach ($docs as $doc)
-                      <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
-                                    <span class="count_top"><h2>{{$doc->title}}</h2></span>
-                                    <div class="count_top">{{$doc->description}}</div> 
-                                    <a class="btn btn-primary"href="{{route('show-doc',$doc->title)}}" role="button">more</a>
-                                   
-                                   @if(Auth::user()->isAdmin())
-                                    <a class="btn btn-default"href="{{route('edit-doc',$doc->title)}}" role="button">edit</a>
-                                    
-                                    @endif
-                                  </div>
-                        
-                          @endforeach
-                          </div>
-                      </div> 
-                </div>
+                         
+                            @foreach ($docs as $doc)
+                            <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
+                                          <span class="count_top"><h2>{{$doc->title}}</h2></span>
+                                          <div class="count_top">{{$doc->description}}</div> 
+                                          <a class="btn btn-primary " style=" border-radius:50%" href="{{route('show-doc',$doc->title)}}" role="button">more</a>
+                                        
+                                        @if(Auth::user()->isAdmin())
+                                          <a class="btn btn-default"style=" border-radius:50%" href="{{route('edit-doc',$doc->title)}}" role="button">edit</a>
+                                          
+                                          @endif
+                                        </div>
+                              
+                                @endforeach
+                                </div>
+                          </div> 
+                    </div>
                 </div>
               </div>
             </div>

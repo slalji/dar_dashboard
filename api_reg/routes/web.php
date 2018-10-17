@@ -57,6 +57,7 @@ Route::post('/create_keys', 'PagesController@create_keys')->name('create_keys');
 Route::get('/documentation', 'PagesController@documentation');
 Route::get('/documentation/{title}', 'PagesController@show_doc')->name('show-doc');
 Route::get('/doc-edit/{title}', 'DocumentsController@edit')->name('edit-doc');
+Route::get('/doc-update/{title}', 'DocumentsController@update')->name('update');
 
 
 Route::group(['middleware' => 'web'], function () {

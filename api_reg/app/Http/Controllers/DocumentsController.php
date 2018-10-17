@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class DocumentsController extends Controller
 {
@@ -33,17 +34,39 @@ class DocumentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $title
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($title)
     {
-        //$post = Document::find($id);
+        $docs = self::find($title);
         // Check for correct user
-        if(auth()->user()->isAdmin){
-            return  'Unauthorized Page to Edit this page';
-        }
-        return view('documents.edit')->with('post', $post);
+        //die(print_r($doc));
+        //return view('documents.edit')->with('doc', $doc);
+        return view('documents.edit', compact('docs'));
+        
+    }
+    /**
+     * Update the form for editing the specified resource.
+     *
+     * @param  string  $title
+     * @return \Illuminate\Http\Response
+     */
+    public function update($title)
+    {
+        
+        return view('documents.edit', compact('docs'));
+        
+    }
+    public function find($title)
+    {
+        $doc = DB::table('documentation')
+                    ->select(DB::raw('*'))
+                    ->where('title','=',$title)
+                    ->get();
+
+        //return view('document', compact('docs'));
+        return $doc;
     }
     
 }

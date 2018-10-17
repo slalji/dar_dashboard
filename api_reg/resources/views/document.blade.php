@@ -47,7 +47,11 @@
     padding:10px;
     min-height:200px
 }
-
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    xborder: 0px solid #2a40543d; 
+    border-left: solid 1px #2a40543d!important;
+    border-top: solid #2a40543d 1px !important;
+}
 </style>
 <script>
 $( document ).ready(function() {
@@ -73,15 +77,35 @@ $( document ).ready(function() {
                     </div>
                         <div class="container">
                         <section id="tabs">
-                        @foreach ($docs as $doc)
-	<div class="container">
-		<h6 class="section-title h2">{{$doc->title}}</h2>
-		<div class="row">
+                       
+	 
+        @foreach ($docs as $doc)
+    <div class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{$doc->title}}</h3>					 
+				</div>
+				<div class="panel-body">
+                <p><h3 class="panel-title">Description</h3>
+                    <br>{{$doc->description}} </p>
+                    <p><h3 class="panel-title">Required Params</h3>
+                    <br>{{$doc->required}}</p>
+
+                </div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Request Response JSON Payload</h3>				 
+				</div>
+				<div class="panel-body">
+                <div class="row">
 			<div class="col-xs-12 ">
 				<nav>
 					<ul class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-						<li><a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a></li>
-						<li><a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Request</a></li>
+						 <li><a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Request</a></li>
 						<li><a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Response Success</a></li>
 						<li><a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">Response Error</a></li>
 					</ul>
@@ -89,14 +113,7 @@ $( document ).ready(function() {
 				</nav>
                
 				<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-					<div class="tab-pane fade active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <p><b>Description for {{$doc->title}}</b><br>
-                        {{$doc->description}}
-                    </p>
-                        <p><b>Required Fields</b>
-                        {{$doc->required}}
-                        </p>
-                    </div>
+					
 					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <pre><code>{{$doc->request}}</code></pre>
                     </div>
@@ -109,8 +126,11 @@ $( document ).ready(function() {
 				</div>
                 @endforeach
 			</div>
-		</div>
 	</div>
+                </div><!--end of col-8-->
+	</div><!--end row-->
+	</div>
+ 
 </section>
                           
                 </div>
