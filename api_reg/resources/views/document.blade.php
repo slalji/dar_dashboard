@@ -87,10 +87,10 @@ $( document ).ready(function() {
 					<h3 class="panel-title">{{$doc->title}}</h3>					 
 				</div>
 				<div class="panel-body">
-                <p><h3 class="panel-title">Description</h3>
-                    <br>{{$doc->description}} </p>
-                    <p><h3 class="panel-title">Required Params</h3>
-                    <br>{{$doc->required}}</p>
+                <p> <label class="form-control" style="border:0px">Description</label> 
+                      <textarea rows="5"  cols="100" readonly> {{$doc->description}}</textarea> 
+                    <p> <label for="" class="form-control" style="border:0px"> Required Params</label> 
+                     <textarea rows="5" cols="100">{{$doc->required}}</textarea>  
 
                 </div>
 			</div>

@@ -2,6 +2,7 @@
 <div class="top_nav">
     <div class="nav_menu">
         <nav>
+        
             <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
             </div>
@@ -13,12 +14,13 @@
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
+                        <li><a href="#" > -- {{ Auth::user()->name }} -- </a></li>
                         <li>
                             <a href="changePassword">
                             Change Password
                             </a>
                         </li>
-                        <li><a class="dropdown-item" href="">Settings</a></li>
+                        <li><a class="dropdown-item" href="{{ route('home') }}">Home</a></li>
                         
                                     <li><a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -30,7 +32,9 @@
                                         @csrf
                                     </form>
                                     </li>
+                                   
                         </li>
+                      
                         
                         @endguest
                     </ul>

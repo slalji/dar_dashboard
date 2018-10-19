@@ -52,10 +52,11 @@
                             <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
                                           <span class="count_top"><h2>{{$doc->title}}</h2></span>
                                           <div class="count_top">{{$doc->description}}</div> 
-                                          <a class="btn btn-primary " style=" border-radius:50%" href="{{route('show-doc',$doc->title)}}" role="button">more</a>
+                                          
+                                          <a class="badge badge-primary"   href="{{route('show-doc',$doc->title)}}"  > more <i class="fa fa-plus"></i></a>
                                         
                                         @if(Auth::user()->isAdmin())
-                                          <a class="btn btn-default"style=" border-radius:50%" href="{{route('edit-doc',$doc->title)}}" role="button">edit</a>
+                                          <a class="badge badge-secondary"  href="{{route('edit-doc',$doc->title)}}"  > edit <i class="fa fa-pencil"></i></a>
                                           
                                           @endif
                                         </div>

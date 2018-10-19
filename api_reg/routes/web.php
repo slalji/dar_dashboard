@@ -57,7 +57,7 @@ Route::post('/create_keys', 'PagesController@create_keys')->name('create_keys');
 Route::get('/documentation', 'PagesController@documentation');
 Route::get('/documentation/{title}', 'PagesController@show_doc')->name('show-doc');
 Route::get('/doc-edit/{title}', 'DocumentsController@edit')->name('edit-doc');
-Route::get('/doc-update/{title}', 'DocumentsController@update')->name('update');
+Route::post('/doc-update', 'DocumentsController@update')->name('update-doc');
 
 
 Route::group(['middleware' => 'web'], function () {
@@ -67,7 +67,7 @@ Route::group(['middleware' => 'web'], function () {
               
         return view('auth.login');
     })->name('main');
-    Route::get('/home', 'PagesController@home');
+    Route::get('/home', 'PagesController@home')->name('home');
     Route::get('/changePassword','HomeController@showChangePasswordForm');
     Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
 

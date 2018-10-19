@@ -66,46 +66,47 @@ $( document ).ready(function() {
                   <div xclass="x_content">
                     <p class="text-muted font-13 m-b-30">
                     <div id="loading"></div>
-                     click on tabs below to view JSON                   </p>
+                     click submit below to update content                   </p>
                     <!-- Main  for a primary marketing message or call to action -->
                    
 
                     </div>
+                    @foreach ($posts as $post)
                         <div class="container">
-                        <h1>Edit Document</h1>
-                        @foreach ($docs as $doc)
-    {!! Form::open(['action' => ['DocumentsController@update', $doc->title], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                        <h1>Edit {{$post->title}}</h1>
+                      
+    {!! Form::open(['action' => ['DocumentsController@update'], 'method' => 'POST' ]) !!}
         <div class="form-group row">
         <div class="col-sm-4">
             {{Form::label('title', 'Title')}}
-            {{Form::text('title', $doc->title, ['class' => 'form-control', 'placeholder' => 'Title'])}}
+            {{Form::text('title', $post->title, ['class' => 'form-control', 'placeholder' => 'Title'])}}
         </div>
         </div>
         <div class="form-group">
             {{Form::label('required', 'Required')}}
-            {{Form::text('required', $doc->required, ['class' => 'form-control', 'placeholder' => 'Required Params'])}}
+            {{Form::text('required', $post->required, ['class' => 'form-control', 'placeholder' => 'Required Params'])}}
         </div>
         <div class="form-group">
             {{Form::label('description', 'Description')}}
-            {{Form::text('description', $doc->description, ['class' => 'form-control', 'placeholder' => 'Description'])}}
+            {{Form::text('description', $post->description, ['class' => 'form-control', 'placeholder' => 'Description'])}}
         </div>
         <div class="form-group">
             {{Form::label('request', 'Request')}}
-            {{Form::textarea('body', $doc->request, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Request Payload'])}}
+            {{Form::textarea('body', $post->request, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Request Payload'])}}
         </div>
         <div class="form-group">
             {{Form::label('response_success', 'Success')}}
-            {{Form::textarea('response_error', $doc->response_success, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Response Success Payload'])}}
+            {{Form::textarea('response_error', $post->response_success, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Response Success Payload'])}}
         </div>
         <div class="form-group">
             {{Form::label('response_error', 'Error')}}
-            {{Form::textarea('response_error', $doc->response_error, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Response Success Payload'])}}
+            {{Form::textarea('response_error', $post->response_error, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Response Success Payload'])}}
         </div>
         
-        {{Form::hidden('_method','PUT')}}
+        {{ csrf_field() }}
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
-    {!! Form::close() !!}
-                         @endforeach
+        {!! Form::close() !!}
+          @endforeach
                 </div>
                  
 
