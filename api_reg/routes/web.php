@@ -55,7 +55,7 @@ Route::post('/download_nbc', 'PagesController@download_nbc');
 */
 Route::post('/create_keys', 'PagesController@create_keys')->name('create_keys');
 Route::get('/documentation', 'PagesController@documentation');
-Route::get('/documentation/{title}', 'PagesController@show_doc')->name('show-doc');
+Route::get('/documentation/{title}', 'DocumentsController@index')->name('show-doc');
 Route::get('/doc-edit/{title}', 'DocumentsController@edit')->name('edit-doc');
 Route::post('/doc-update', 'DocumentsController@update')->name('update-doc');
 

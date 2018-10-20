@@ -74,17 +74,20 @@ $( document ).ready(function() {
                     @foreach ($posts as $post)
                         <div class="container">
                         <h1>Edit {{$post->title}}</h1>
-                      
-    {!! Form::open(['action' => ['DocumentsController@update'], 'method' => 'POST' ]) !!}
+        <form id="theForm" action="{{route('update-doc',$post->title)}}" method="post">              
+    
         <div class="form-group row">
+        
         <div class="col-sm-4">
             {{Form::label('title', 'Title')}}
             {{Form::text('title', $post->title, ['class' => 'form-control', 'placeholder' => 'Title'])}}
+            {{Form::hidden('id', $post->id)}}
         </div>
         </div>
         <div class="form-group">
-            {{Form::label('required', 'Required')}}
-            {{Form::text('required', $post->required, ['class' => 'form-control', 'placeholder' => 'Required Params'])}}
+            {{Form::label('required', 'Required Format: name;datatype;description | name2;datatype2;description2')}}
+            {{Form::textarea('body', $post->required, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Required'])}}
+
         </div>
         <div class="form-group">
             {{Form::label('description', 'Description')}}
@@ -92,11 +95,11 @@ $( document ).ready(function() {
         </div>
         <div class="form-group">
             {{Form::label('request', 'Request')}}
-            {{Form::textarea('body', $post->request, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Request Payload'])}}
+            {{Form::textarea('body', $post->request_body, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Request Payload'])}}
         </div>
         <div class="form-group">
             {{Form::label('response_success', 'Success')}}
-            {{Form::textarea('response_error', $post->response_success, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Response Success Payload'])}}
+            {{Form::textarea('response_success', $post->response_success, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Response Success Payload'])}}
         </div>
         <div class="form-group">
             {{Form::label('response_error', 'Error')}}
@@ -104,8 +107,11 @@ $( document ).ready(function() {
         </div>
         
         {{ csrf_field() }}
-        {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
-        {!! Form::close() !!}
+        <input type="submit" class="btn btn-primary" id="save" value="Save" name="submit"> 
+                <!--<button type="button" class="btn btn-warning" id="download" value="download" name="download">Download</button>-->
+                <button type="button" class="btn btn-secondary" id="home" value="home" data-dismiss="modal">Cancel</button>
+
+        </form>
           @endforeach
                 </div>
                  

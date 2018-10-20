@@ -55,10 +55,11 @@
 </style>
 <script>
 $( document ).ready(function() {
-    $('#nav-home').attr('show',true);
+    $('.nav-tabs a[href="#nav-profile"]').tab('show');
+    $('.nav-tabs a[href="#nav-desc"]').tab('show');
 });
 </script>
- 
+   @foreach ($posts as $post)
 <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div xclass="x_panel">
@@ -70,7 +71,9 @@ $( document ).ready(function() {
                   <div xclass="x_content">
                     <p class="text-muted font-13 m-b-30">
                     <div id="loading"></div>
-                     click on tabs below to view JSON                   </p>
+                     click on tabs below to view JSON
+                                       
+                                                         
                     <!-- Main  for a primary marketing message or call to action -->
                    
 
@@ -79,18 +82,32 @@ $( document ).ready(function() {
                         <section id="tabs">
                        
 	 
-        @foreach ($docs as $doc)
+      
     <div class="row">
 		<div class="col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">{{$doc->title}}</h3>					 
+					<h3 class="panel-title">{{$post->title}}  @if(Auth::user()->isAdmin())
+                                          <a class="badge badge-secondary"  href="{{route('edit-doc',$post->title)}}"  > Edit <i class="fa fa-pencil"></i></a>
+                                          
+                                          @endif  </h3>					 
 				</div>
 				<div class="panel-body">
-                <p> <label class="form-control" style="border:0px">Description</label> 
-                      <textarea rows="5"  cols="100" readonly> {{$doc->description}}</textarea> 
-                    <p> <label for="" class="form-control" style="border:0px"> Required Params</label> 
-                     <textarea rows="5" cols="100">{{$doc->required}}</textarea>  
+                <nav>
+					<ul class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+						  <li><a class="nav-item nav-link" id="nav-desc-tab" data-toggle="tab" href="#nav-desc" role="tab" aria-controls="nav-contact" aria-selected="false">Description</a></li>
+						<li><a class="nav-item nav-link" id="nav-params-tab" data-toggle="tab" href="#nav-params" role="tab" aria-controls="nav-about" aria-selected="false">Required</a></li>
+					</ul>
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+					
+					 <div class="tab-pane fade" id="nav-desc" role="tabpanel" aria-labelledby="nav-desc-tab">
+                         <span xstyle=color:darkgreen>{{$post->description}}</span> 
+                    </div>
+					<div class="tab-pane fade" id="nav-params" role="tabpanel" aria-labelledby="nav-params-tab">
+                         <span xstyle=color:darkred>{{$post->required}}</span> 
+                    </div>
+				</div>    
+				</nav>
 
                 </div>
 			</div>
@@ -98,7 +115,7 @@ $( document ).ready(function() {
 		<div class="col-md-8">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Request Response JSON Payload</h3>				 
+					<h3 class="panel-title">Request Response JSON Payload <a class="btn btn-primary"   href="{{route('show-doc',$post->title)}}"  > Try It <i class="fa fa-plus"></i></a></h3> 				 
 				</div>
 				<div class="panel-body">
                 <div class="row">
@@ -108,20 +125,21 @@ $( document ).ready(function() {
 						 <li><a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Request</a></li>
 						<li><a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Response Success</a></li>
 						<li><a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">Response Error</a></li>
-					</ul>
+                         
+                    </ul>
                      
 				</nav>
                
 				<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
 					
 					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        <pre><code>{{$doc->request}}</code></pre>
+                        <pre><code>{{$post->request_body}}</code></pre>
                     </div>
 					<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <pre><code><span style=color:darkgreen>{{$doc->response_success}}</span></code></pre>
+                        <pre><code><span style=color:darkgreen>{{$post->response_success}}</span></code></pre>
                     </div>
 					<div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                        <pre><code><span style=color:darkred>{{$doc->response_error}}</span></code></pre>
+                        <pre><code><span style=color:darkred>{{$post->response_error}}</span></code></pre>
                     </div>
 				</div>
                 @endforeach

@@ -22,14 +22,15 @@ class DocumentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($title)
     {
-        $docs = DB::table('documentation')
+        $posts = DB::table('documentation')
                     ->select(DB::raw('*'))
                     ->where('title','=',$title)
                     ->get();
-
-        return view('document', compact('docs'));
+        
+        $docs = self::selectAll();
+        return view('document', compact('docs','posts'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -58,21 +59,24 @@ class DocumentsController extends Controller
     {
         $id = $request->id;
         $title = $request->title;
-        $required = $request->reequired;
-        $req = $request->request;
+        $required = $request->required;
+        $req = $request->body;
         $success = $request->response_success;
         $error = $request->response_error;
-        die(print_r($request->id));
+         
+        //sdie(print_r($success));
         $posts = DB::table('documentation')
             ->where('id', $id)
             ->update(['title' => $title,
             'required' => $required,
-            'request' => $req,
+            'request_body' => $req,
             'response_success' => $success,
             'response_error' => $error
             ]);
         
-            return view('document', compact('docs', 'posts'));
+        $docs = self::selectAll();
+        (print_r($doc));
+        return view('document', compact('docs', 'posts'));
         
         
     }
@@ -90,6 +94,7 @@ class DocumentsController extends Controller
                     ->get();
 
         //return view('document', compact('docs'));
+        //(print_r($doc));
         return $doc;
     }
     
