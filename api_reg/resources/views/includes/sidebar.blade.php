@@ -33,7 +33,7 @@
                         <ul class="nav xchild_menu">
                         @if( ! empty ($docs))
                             @foreach ($docs as $doc)
-                            <li class="{{ Request::path() == '/documentation' ? 'open active' : '' }}" ><a href="documentation/{{$doc->title}}">{{$doc->title}}</a></li>
+                            <li class="{{ Request::path() == '/documentation' ? 'open active' : '' }}" ><a href="{{ url('/documentation/'.$doc->title) }}">{{$doc->title}}</a></li>
                             @endforeach
                         @endif     
                             

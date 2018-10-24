@@ -59,12 +59,13 @@ $( document ).ready(function() {
     $('.nav-tabs a[href="#nav-desc"]').tab('show');
 });
 </script>
-   @foreach ($posts as $post)
+ 
+   
 <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div xclass="x_panel">
                   <div class="x_title ">
-                    <h1>Detailed Documentation</h1>
+                    <h1>{ {{$post->title}} } Details</h1>
                    
                     <div class="clearfix"></div>
                   </div>
@@ -84,7 +85,7 @@ $( document ).ready(function() {
 	 
       
     <div class="row">
-		<div class="col-md-4">
+		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{$post->title}}  @if(Auth::user()->isAdmin())
@@ -92,30 +93,66 @@ $( document ).ready(function() {
                                           
                                           @endif  </h3>					 
 				</div>
+               
 				<div class="panel-body">
-                <nav>
-					<ul class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-						  <li><a class="nav-item nav-link" id="nav-desc-tab" data-toggle="tab" href="#nav-desc" role="tab" aria-controls="nav-contact" aria-selected="false">Description</a></li>
-						<li><a class="nav-item nav-link" id="nav-params-tab" data-toggle="tab" href="#nav-params" role="tab" aria-controls="nav-about" aria-selected="false">Required</a></li>
-					</ul>
-                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-					
-					 <div class="tab-pane fade" id="nav-desc" role="tabpanel" aria-labelledby="nav-desc-tab">
-                         <span xstyle=color:darkgreen>{{$post->description}}</span> 
+                <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                    <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Description</h5>
+                    
+                    </div> 
+                </a>
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                    
+                    <p class="mb-1">{{$post->description}}</p>
+                    </div> 
+                </a>
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                    <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Parameters 
+                    
+                    </h5>
+                    
+                    </div> 
+                </a>
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                    
+                    <span>
+                         <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Datatype</th>
+                                <th scope="col">Required</th>
+                                <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($params as $param)
+                                <tr>
+                                <th scope="row">{{$param->name}}</th>
+                                <td>{{$param->datatype}}</td>
+                                <td>{{$param->required}}</td>
+                                <td>{{$param->description}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                            </table>
+                    </span> 
+                   <p></p>
                     </div>
-					<div class="tab-pane fade" id="nav-params" role="tabpanel" aria-labelledby="nav-params-tab">
-                         <span xstyle=color:darkred>{{$post->required}}</span> 
-                    </div>
-				</div>    
-				</nav>
-
+                    
+                </a>
+                </div>
                 </div>
 			</div>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Request Response JSON Payload <a class="btn btn-primary"   href="{{route('show-doc',$post->title)}}"  > Try It <i class="fa fa-plus"></i></a></h3> 				 
+					<h3 class="panel-title">Request Response JSON Payload <a class="btn btn-primary"   href="{{route('guzzle')}}"  > Try It <i class="fa fa-plus"></i></a></h3> 				 
 				</div>
 				<div class="panel-body">
                 <div class="row">
@@ -142,7 +179,7 @@ $( document ).ready(function() {
                         <pre><code><span style=color:darkred>{{$post->response_error}}</span></code></pre>
                     </div>
 				</div>
-                @endforeach
+                
 			</div>
 	</div>
                 </div><!--end of col-8-->
@@ -159,13 +196,13 @@ $( document ).ready(function() {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="ModalLabel">New Project</h3>
+                <h3 class="modal-title" id="ModalLabel">Edit Parameters {{$post->id}}</h3>
                 <div class="message" id="message"></div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
         </div>
-        <form id="theForm" action="{{route('create_keys')}}" method="post">
+        <form id="theForm" action="" method="post">
             <div xclass="modal-body">
 
                 <div class="col-xs-12 col-sm-6">
@@ -173,15 +210,22 @@ $( document ).ready(function() {
                   <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                          
                         <div class="form-group">
-                          <label for="title">Project Title</label>
-                          <input type="text" name="title" id="title" value="" required class="form-control" />
+                          <label for="title">Name</label>
+                          <input type="text" name="doc_id" id="doc_id" value="{{$param->doc_id}}" required class="form-control" />
+                        
+                          <input type="text" name="name" id="name" value="{{$param->name}}" required class="form-control" />
                         </div>
                         <div class="form-group">
-                          <label for="utility_ref">Pass Pharse <span class="small"></span></label>
-                          <input type="password" name="passphrase" id="passphrase" value="" required class="form-control"  />
+                          <label for="datatype">Datatype<span class="small"></span></label>
+                          <input type="text" name="datatype" id="datatype" value="{{$param->datatype}}" required class="form-control-sm"  />
                         </div>
                         <div class="form-group">
-                          <input type="hidden" name="accountNo" id="accountNo" value="{{Auth::user()->accountNo}}" class="form-control"  />
+                          <label for="title">Required</label>
+                          <input type="text" name="required" id="required" value="{{$param->required}}" required class="form-control-sm" />
+                        </div>
+                        <div class="form-group">
+                          <label for="title">Description</label>
+                          <input type="text" name="description" id="description" value="{{$param->description}}" required class="form-control" />
                         </div>
                       
                
