@@ -1,9 +1,10 @@
 <div class="col-md-3 left_col">
-    <div class="left_col scroll-view">
-       
-        
-       <!-- /menu profile quick info -->
-        <div class="clearfix"></div>
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0; background:#fff">
+              <a href="index.php" class="site_title" ><img src="images/{{ env('LOGO') }}" alt="Selcom"> <!--<span style="color:#2A3F54">Selcom</span>--></a>
+            </div>
+
+            <div class="clearfix"></div>
        
          
         

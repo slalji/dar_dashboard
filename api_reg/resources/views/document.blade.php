@@ -130,6 +130,7 @@ $( document ).ready(function() {
                                 </tr>
                             </thead>
                             <tbody>
+                            @if(!$params->isEmpty())
                             @foreach ($params as $param)
                                 <tr>
                                 <th scope="row">{{$param->name}}</th>
@@ -138,6 +139,7 @@ $( document ).ready(function() {
                                 <td>{{$param->description}}</td>
                                 </tr>
                             @endforeach
+                            @endif
                             </tbody>
                             </table>
                     </span> 
@@ -202,13 +204,14 @@ $( document ).ready(function() {
                     <span aria-hidden="true">&times;</span>
                 </button>
         </div>
+        @if(!$params->isEmpty())
         <form id="theForm" action="" method="post">
             <div xclass="modal-body">
 
                 <div class="col-xs-12 col-sm-6">
                  
                   <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                         
+                 
                         <div class="form-group">
                           <label for="title">Name</label>
                           <input type="text" name="doc_id" id="doc_id" value="{{$param->doc_id}}" required class="form-control" />
@@ -239,6 +242,7 @@ $( document ).ready(function() {
                 <button type="button" class="btn btn-secondary" id="createKeys" value="createKeys" data-dismiss="modal">Close</button>
             </div>
             </form>
+        @endif
         </div>
     </div>
   </div>

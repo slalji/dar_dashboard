@@ -63,7 +63,7 @@ class DocumentsController extends Controller
      */
     public function update(Request $request) {
         
-        //sdie(print_r($success));
+       
         $posts = DB::table('documentation')
             ->where('id', $request->id)
             ->update(['title' => $request->title, 
@@ -72,7 +72,7 @@ class DocumentsController extends Controller
             'response_success' => $request->response_success,
             'response_error' => $request->response_error
             ]);
-        
+            
         $docs = self::selectAll();
         $posts = self::find($request->title);
         $post = $posts[0];

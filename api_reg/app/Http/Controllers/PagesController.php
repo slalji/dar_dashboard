@@ -20,7 +20,7 @@ class PagesController extends Controller
         $user = Auth::user();  
         
         $projects = DB::table('projects')
-                    ->select(DB::raw('title, request_id, secret_hash'))
+                    ->select(DB::raw('title, vendor, public, private'))
                     ->where( 'accountNo', '=', $user->accountNo)
                     ->get();
         $documents = $this->list_doc_menu(); 
@@ -60,21 +60,58 @@ class PagesController extends Controller
            
     }
     function create_keys(Request $request){
-        $request_id = $this->rand_string(8);
+        $vendor = $this->rand_num(8);
         $title = $request->title;
-        $secret_hash = bcrypt($request->passphrase);
+        $rsaKey = openssl_pkey_new(array( 
+            'private_key_bits' => 2048,
+            'private_key_type' => OPENSSL_KEYTYPE_RSA,
+        ));
+        $res = self::_privatePublicKeys();
+       
+         
         $accountNo = $request->accountNo;
         
-        $sql="INSERT into projects(
-        title
-        request_id
-        secret_hash
-        accountNo ) values ('$title', '$request_id','$secret_hash','$accountNo')";
+        
         $result = DB::table('projects')
-        ->insert(['title'=>$title,'request_id'=>$request_id,'secret_hash'=>$secret_hash, 'accountNo'=>$accountNo]);
+        ->insert(['title'=>$title,'vendor'=>$vendor,'public'=>$res['public'],'private'=>$res['private'], 'accountNo'=>$accountNo]);
         //mysqli_query($conn,$sql) or die(mysqli_error($conn).' '.$sql.$data);
         //return view('home', compact('projects'));
         return redirect(url('/home'));
+    }
+    function _privatePublicKeys(){ 
+       
+         
+        // generate 2048-bit RSA key
+        $pkGenerate = openssl_pkey_new(array(
+            'private_key_bits' => 2048,
+            'private_key_type' => OPENSSL_KEYTYPE_RSA
+        ));
+         
+        // get the private key
+        openssl_pkey_export($pkGenerate,$pkGeneratePrivate); // NOTE: second argument is passed by reference
+         
+        // get the public key
+        $pkGenerateDetails = openssl_pkey_get_details($pkGenerate);
+        $pkGeneratePublic = $pkGenerateDetails['key'];
+         
+        // free resources
+        openssl_pkey_free($pkGenerate);
+         
+        // fetch/import public key from PEM formatted string
+        // remember $pkGeneratePrivate now is PEM formatted...
+        // this is an alternative method from the public retrieval in previous
+        $pkImport = openssl_pkey_get_private($pkGeneratePrivate); // import
+        $pkImportDetails = openssl_pkey_get_details($pkImport); // same as getting the public key in previous
+        $pkImportPublic = $pkImportDetails['key'];
+        openssl_pkey_free($pkImport); // clean up
+         return $res = array('private'=>$pkGeneratePrivate, 'public'=>$pkGeneratePublic);
+        // let's see 'em
+        die( "\n".$pkGeneratePrivate
+            ."\n".$pkGeneratePublic
+            ."\n".$pkImportPublic
+            ."\n".'Public keys are '.(strcmp($pkGeneratePublic,$pkImportPublic)?'different':'identical').'.');
+         
+
     }
     function dashboard(){
          

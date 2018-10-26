@@ -61,7 +61,7 @@ Route::post('/doc-update', 'DocumentsController@update')->name('update-doc');
 Route::get('/param-edit/{id}', 'DocumentsController@editParams')->name('edit-params');
 Route::post('/param-update/{id}', 'DocumentsController@updateParams')->name('update-params');
 Route::post('/param-add/{id}', 'DocumentsController@addParams')->name('add-params');
-Route::get('/guzzle', 'GuzzleController@postGuzzleRequest')->name('guzzle');
+Route::get('/guzzle', 'GuzzleController@index')->name('guzzle');
 
 Route::group(['middleware' => 'web'], function () {
     Auth::routes();
