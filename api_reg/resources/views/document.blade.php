@@ -146,7 +146,7 @@ $( document ).ready(function() {
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Request Response JSON Payload <a class="btn btn-primary"   href="{{route('guzzle')}}"  > Try It <i class="fa fa-plus"></i></a></h3> 				 
+					<h3 class="panel-title">Request Response JSON Payload <a class="btn btn-primary"   href="{{route('guzzle',$post->id)}}"  > Try It <i class="fa fa-plus"></i></a></h3> 				 
 				</div>
 				<div class="panel-body">
                 <div class="row">

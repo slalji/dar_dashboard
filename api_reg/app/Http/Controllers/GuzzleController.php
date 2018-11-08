@@ -10,7 +10,16 @@ use GuzzleHttp\Client;
 
 class GuzzleController extends Controller {
     
-    function index(){
+    function index($id){
+         
+       /* $post = app('App\Http\Controllers\DocumentsController')->find($id)->first();
+         
+        $docs = app('App\Http\Controllers\DocumentsController')->selectAll();        
+         
+        return view('guzzle.index', compact('docs', 'post' ));*/
+    }
+    
+    function try(){
          
         $client = new Client();
         $res = $client->request('GET', 'http://192.168.1.14:7300/Selcom/request', [

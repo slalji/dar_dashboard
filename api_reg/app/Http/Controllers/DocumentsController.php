@@ -24,12 +24,7 @@ class DocumentsController extends Controller
      */
     public function index($id)
     {
-       /* $posts = DB::table('documentation')
-                    ->select(DB::raw('*'))
-                    ->where('title','=',$title)
-                    ->get();
-                    */
-                   
+       
         $post = self::find($id)->first();
         $docs = self::selectAll();
         $params = self::selectParams($id);
@@ -47,9 +42,7 @@ class DocumentsController extends Controller
         $post = self::find($id)->first();
         $docs = self::selectAll();
         $params = self::selectParams($id);
-        // Check for correct user
-        //die(print_r($doc));
-        //return view('documents.edit')->with('doc', $doc);
+         
         return view('documents.edit', compact('docs', 'post','params'));
         
     }
