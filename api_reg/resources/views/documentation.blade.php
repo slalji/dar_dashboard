@@ -53,10 +53,10 @@
                                           <span class="count_top"><h2>{{$doc->title}}</h2></span>
                                           <div class="count_top">{{$doc->description}}</div> 
                                           
-                                          <a class="badge badge-primary"   href="{{route('show-doc',$doc->title)}}"  > more <i class="fa fa-plus"></i></a>
+                                          <a class="badge badge-primary"   href="{{route('show-doc',$doc->id)}}"  > more <i class="fa fa-plus"></i></a>
                                         
                                         @if(Auth::user()->isAdmin())
-                                          <a class="badge badge-secondary"  href="{{route('edit-doc',$doc->title)}}"  > edit <i class="fa fa-pencil"></i></a>
+                                          <a class="badge badge-secondary"  href="{{route('edit-doc',$doc->id)}}"  > edit <i class="fa fa-pencil"></i></a>
                                           
                                           @endif
                                         </div>

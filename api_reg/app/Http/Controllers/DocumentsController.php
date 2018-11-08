@@ -22,19 +22,18 @@ class DocumentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($title)
+    public function index($id)
     {
        /* $posts = DB::table('documentation')
                     ->select(DB::raw('*'))
                     ->where('title','=',$title)
                     ->get();
                     */
-        $posts = DB::table('documentation')->get();
-        $post=$posts[0];
-       
+                   
+        $post = self::find($id)->first();
         $docs = self::selectAll();
-        $params = self::selectParams($posts[0]->id);
-        //die(print_r($params));
+        $params = self::selectParams($id);
+       
         return view('document', compact('docs','post','params'));
     }
     /**
@@ -43,16 +42,15 @@ class DocumentsController extends Controller
      * @param  string  $title
      * @return \Illuminate\Http\Response
      */
-    public function edit($title){
+    public function edit($id){
         
-        $posts = self::find($title);
-        $post = $posts[0];
+        $post = self::find($id)->first();
         $docs = self::selectAll();
-        $params = self::selectParams($post->id);
+        $params = self::selectParams($id);
         // Check for correct user
         //die(print_r($doc));
         //return view('documents.edit')->with('doc', $doc);
-        return view('documents.edit', compact('docs', 'posts','params'));
+        return view('documents.edit', compact('docs', 'post','params'));
         
     }
     /**
@@ -74,7 +72,7 @@ class DocumentsController extends Controller
             ]);
             
         $docs = self::selectAll();
-        $posts = self::find($request->title);
+        $posts = self::find($request->id);
         $post = $posts[0];
         $params = self::selectParams($request->id);
          
@@ -84,15 +82,15 @@ class DocumentsController extends Controller
     }
     public function selectAll(){
         $docs = DB::table('documentation')
-        ->select(DB::raw('title, description'))
+        ->select(DB::raw('id, title, description'))
         ->get();
         return $docs;
     }
-    public function find($title)
+    public function find($id)
     {
         $doc = DB::table('documentation')
                     ->select(DB::raw('*'))
-                    ->where('title','=',$title)
+                    ->where('id','=',$id)
                     ->get();
 
         //return view('document', compact('docs'));
@@ -111,7 +109,7 @@ class DocumentsController extends Controller
         ->select(DB::raw('*'))
         ->where('doc_id','=',$id)
         ->get();
-        
+       
         return $params;
         
     }

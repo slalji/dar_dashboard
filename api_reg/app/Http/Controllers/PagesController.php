@@ -20,7 +20,7 @@ class PagesController extends Controller
         $user = Auth::user();  
         
         $projects = DB::table('projects')
-                    ->select(DB::raw('title, vendor, public, private'))
+                    ->select(DB::raw('id, title, vendor, public, private'))
                     ->where( 'accountNo', '=', $user->accountNo)
                     ->get();
         $documents = $this->list_doc_menu(); 
@@ -34,7 +34,7 @@ class PagesController extends Controller
         $user = Auth::user();  
         
         $docs = DB::table('documentation')
-                    ->select(DB::raw('title, description'))
+                    ->select(DB::raw('id, title, description'))
                     ->get();
 
         return view('documentation', compact('docs'));
@@ -43,22 +43,23 @@ class PagesController extends Controller
     function list_doc_menu(){        
          
         $docs = DB::table('documentation')
-                    ->select(DB::raw('title'))
+                    ->select(DB::raw('id,title'))
                     ->get();
 
         return view('documentation', compact('docs'));
            
     }
-    function show_doc($title){
+    function show_doc($id){
                 
         $docs = DB::table('documentation')
                     ->select(DB::raw('*'))
-                    ->where('title','=',$title)
+                    ->where('id','=',$id)
                     ->get();
 
         return view('document', compact('docs'));
            
     }
+     
     function create_keys(Request $request){
         $vendor = $this->rand_num(8);
         $title = $request->title;
@@ -70,13 +71,19 @@ class PagesController extends Controller
        
          
         $accountNo = $request->accountNo;
+        //$private = str_replace(' ','\r\n',$res['private']);
+       // $public = str_replace(' ','\r\n',$res['public']);
+
+        $private =  $res['private'];
+        $public =  $res['public'];
         
-        
-        $result = DB::table('projects')
-        ->insert(['title'=>$title,'vendor'=>$vendor,'public'=>$res['public'],'private'=>$res['private'], 'accountNo'=>$accountNo]);
+         
+        $id = DB::table('projects')->insertGetId(
+         ['title'=>$title,'vendor'=>$vendor,'public'=>$public,'private'=>$private, 'accountNo'=>$accountNo]);
+         
         //mysqli_query($conn,$sql) or die(mysqli_error($conn).' '.$sql.$data);
         //return view('home', compact('projects'));
-        return redirect(url('/home'));
+        return redirect(route('keys',$id));
     }
     function _privatePublicKeys(){ 
        
@@ -112,6 +119,32 @@ class PagesController extends Controller
             ."\n".'Public keys are '.(strcmp($pkGeneratePublic,$pkImportPublic)?'different':'identical').'.');
          
 
+    }
+    function keys($project){
+                
+        $projects = DB::table('projects')
+                    ->select(DB::raw('id, title, vendor, public, private'))
+                    ->where( 'id', '=', $project)
+                    ->get();
+        $documents = $this->list_doc_menu(); 
+
+        return view('keys', compact('projects','docs'));
+           
+    }
+    function save_keys($project){
+         /* copy vendor and public key to member table. delete private key*/        
+        $project = DB::table('projects')
+                    ->select(DB::raw('id, accountNo, title, vendor, public, private'))
+                    ->where( 'id', '=', $project)
+                    ->get()->first();
+        //die(print_r( $project->public));
+        /*$posts = DB::table('members')->insert(
+            ['username' =>$project->title,'vendor' => $project->vendor, 'public' => $project->public ]
+        );*/
+                    
+        return back();
+        //return view('keys', compact('projects','docs'));
+           
     }
     function dashboard(){
          

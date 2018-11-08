@@ -1,21 +1,7 @@
 @extends('layouts/blank')
 
 @section('content')
-<script> 
-
-jQuery(document).ready(function() {
-  $('.targetDiv').hide();
- 
-});
-function onClick(id){
-  $('.targetDiv').hide();
- $('#bio_'+id).toggle();
- 
-}
-
- 
-
-</script>
+<script src="./app/js/nbc.js"></script>
 <style>
 .col-sm-4 {
     width: 33.33333333%;
@@ -36,19 +22,16 @@ function onClick(id){
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div xclass="x_panel">
                   <div class="x_title ">
-                    <h1>Your API Project Key List</h1>
+                    <h1>Your Project Private and Public Keys</h1>
                    
                     <div class="clearfix"></div>
                   </div>
                   <div xclass="x_content">
                     <p class="text-muted font-13 m-b-30">
                     <div id="loading"></div>
-                     Selcom API Gateway is a secure webservice that requires 
-                     <span class="label" style="background:white; color:#1ABB9C"> vendor</span> id and public private RSA keys. 
-                     Creating a new project will generated a <span class="label" style="background:white; color:#1ABB9C"> vendor</span> id 
-                     and allow you to generate private public RSA Key where by private key is shown to you once to save and public key is stored at Selcom. 
-                     the newly created <span class="label" style="background:white; color:#1ABB9C"> vendor</span> is to be placed in the payload under RequestParams and private key 
-                     is used by you to create JWT bearer token. Review <a href="#" class="label" style="background:white; color:#1ABB9C"> <i class="fa fa-file"></i> documentation on generating bearer token</a>
+                     Save <span class="label" style="background:white; color:#1ABB9C"> Private </span> Key Safely with you by copy pasting. Use this key to sign when creating JWT Bearer Token
+                     <span class="label" style="background:white; color:#1ABB9C"> Public</span> is Safe with Selcom. Selcom will use this key to 
+                     verify your Selcom API request
                      
                       </p>
                        
@@ -59,26 +42,27 @@ function onClick(id){
                     </div>
                         <div class="container">
                           <div xclass="pricing-table pricing-three-column row">
+                          @foreach ($projects as $project)
                           <div class="row tile_count" id="tile">
-                      @foreach ($projects as $project)
+                     
                       <div class="col-md-6 col-sm-6 col-xs-3 xtile_stats_count">
                                     <span class="count_top"><i class="fa fa"></i><h2>  {{$project->title}}</h2></span>
-                                    <div class="count_bottom">Vendor  <br><i class="green">{{$project->vendor}}</i></div>
-                                    <span class="count_bottom" ><i class="fa fa-key" style="color:"></i> Public Key for Signing 
-<button id="{{$project->id}}" class="btn btn-small showSingle" onclick=onClick(this.id)>Show</button>
- <script>
- 
- </script>
-                                    <br><i id="bio_{{$project->id}}" class="targetDiv" > {{$project->public}}</i></span>
+                                    <div class="count_bottom">Vendor  <h3><i class="green">{{$project->vendor}}</i><h3></div>
+                                    <span class="count_bottom" ><h3><i class="fa fa-key" style="color:"></i> Private Key for Signing
+                                    </h3><i xclass="green"> {{$project->private}}</i></span>
                                      
                                   </div>
                         
-                          @endforeach
+                         
                           </div>
+                          <span class="count_bottom" ><h3><i class="fa fa-key" style="color:"></i> Public Key for Signing
+                                    </h3><i class="green"> {{$project->public}}</i></span>
                       </div> 
+                      @endforeach
                       <div class="clearfix"></div>
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Create New Project</button>
-                  </div>
+                       <a class="btn btn-primary"   href="{{route('home')}}"  > Home <i class="fa fa-home"></i></a> 				 
+                 
+                      </div>
                 </div>
               </div>
             </div>

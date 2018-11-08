@@ -8,9 +8,9 @@
             </div>
             
            <div>
-           <ul class="profile nav navbar-nav navbar-left ml-auto">
+           <!--<ul class="profile nav navbar-nav navbar-left ml-auto">
            <li style="margin-left:180px"><h5>Selcom API Registration and Documentation</h5></li> 
-           </ul>
+           </ul>-->
            </div>
             <ul class="profile nav navbar-nav navbar-right ml-auto">
                         <!-- Authentication Links -->

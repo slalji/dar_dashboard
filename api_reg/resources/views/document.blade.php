@@ -3,23 +3,7 @@
 @section('content')
 
 <style>
-/*.col-sm-4 {
-    width: 33.33333333%;
-    background: white;
-    border: 1px solid;
-    border-radius: 15px;
-    padding: 5px;
-    margin: 5px;
-}
-.plan-feature ul li{
-  list-type-style:none !important;
-}
-.tile_count .tile_stats_count{
-  background:white;
-  white-space:normal !important;  
-  overflow:visible;
-  border: 1px solid #D9DEE4;
-}*/
+
 #tabs{
 	xbackground: #D9DEE4;
     color: #73879C;
@@ -33,7 +17,7 @@
     background-color: transparent;
     border-color: transparent transparent #73879C;
     border-bottom: 4px solid !important;
-    font-size: 20px;
+    font-size: 14px;
     font-weight: bold;
 }
 #tabs .nav-tabs .nav-link {
@@ -41,7 +25,7 @@
     border-top-left-radius: .25rem;
     border-top-right-radius: .25rem;
     color: #73879C;
-    font-size: 20px;
+    font-size: 14px;
 }
 .tab-pane{
     padding:10px;
@@ -52,15 +36,23 @@
     border-left: solid 1px #2a40543d!important;
     border-top: solid #2a40543d 1px !important;
 }
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #aeb1b3;
+    border: 0px;
+}
+
 </style>
 <script>
 $( document ).ready(function() {
     $('.nav-tabs a[href="#nav-profile"]').tab('show');
     $('.nav-tabs a[href="#nav-desc"]').tab('show');
 });
+
+
 </script>
- 
-   
+
 <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div xclass="x_panel">
@@ -89,7 +81,7 @@ $( document ).ready(function() {
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{$post->title}}  @if(Auth::user()->isAdmin())
-                                          <a class="badge badge-secondary"  href="{{route('edit-doc',$post->title)}}"  > Edit <i class="fa fa-pencil"></i></a>
+                                          <a class="badge badge-secondary"  href="{{route('edit-doc',$post->id)}}"  > Edit <i class="fa fa-pencil"></i></a>
                                           
                                           @endif  </h3>					 
 				</div>

@@ -1,8 +1,14 @@
+<style>
+.nav.child_menu li li a:hover,
+.nav.child_menu li li a.active {
+    color: #fff !important;
+}
+</style>
 <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
-            <div class="navbar nav_title" >
+            <div class="navbar nav_title" style="border: 0; background:#fff" >
             <div style="border: 0; background:#fff border-radius:10px; ">
-              <a href="index.php" class="site_title"  ><img src="images/{{ env('LOGO') }}" alt="Selcom"> <!--<span style="color:#2A3F54">Selcom</span>--></a>
+              <a href="index.php" class="site_title"  ><img src="{{asset('images/SELCOM-01.png')}}" title="{{ env('LOGO') }}" alt="Selcom"> <!--<span style="color:#2A3F54">Selcom</span>--></a>
             </div>
             </div>
 
@@ -12,7 +18,7 @@
         <!-- menu profile quick info -->
         <div class="profile">
             <div class="profile_pic">
-                <img src="images/{{ env('FAVICON') }}" class="img-circle profile_img">
+                <img src="{{asset('images/favicon.ico')}}" title="images/{{ env('FAVICON') }}" class="img-circle profile_img">
             </div>
             <div class="profile_info">
                 <span>Welcome, <b>{{ Auth::user()->name }}</b></span>
@@ -34,8 +40,9 @@
                     <li><a href="{{ url('/documentation') }}"><i class="fa fa-file"></i> Documentation <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav xchild_menu">
                         @if( ! empty ($docs))
+                         
                             @foreach ($docs as $doc)
-                            <li class="{{ Request::path() == '/documentation' ? 'open active' : '' }}" ><a href="{{ url('/documentation/'.$doc->title) }}">{{$doc->title}}</a></li>
+                            <li class="{{ Request::path() == '/documentation' ? 'open active' : '' }}" ><a href="{{ route('show-doc',$doc->id) }}">{{$doc->title}}</a></li>
                             @endforeach
                         @endif     
                             

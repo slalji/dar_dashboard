@@ -68,7 +68,7 @@ $( document ).ready(function() {
                    
 
                     </div>
-                    @foreach ($posts as $post)
+                   
                         <div class="container">
                         <h1>Edit {{$post->title}}</h1>
         <form id="theForm" action="{{route('update-doc',$post->title)}}" method="post">              
@@ -88,7 +88,11 @@ $( document ).ready(function() {
         <div class="form-group list-group-item list-group-item-action flex-column align-items-start active">
             {{Form::label('Parameters', 'Parameters')}}
             <h5 class="mb-1"> 
+                @if($params->isEmpty())
+                    <span class="btn btn-info" data-toggle="modal" data-target="#" disabled > Edit {{$post->title}} <i class="fa fa-pencil"></i></span>
+                @else 
                     <span class="btn btn-info" data-toggle="modal" data-target="#myModal"  > Edit {{$post->title}} <i class="fa fa-pencil"></i></span>
+                @endif
                     <span class="btn btn-default" data-toggle="modal" data-target="#addModal"  > Add New Parameter <i class="fa fa-plus"></i></span>
                                           </h5>
              
@@ -113,7 +117,7 @@ $( document ).ready(function() {
                 <button type="button" class="btn btn-secondary" id="home" value="home" data-dismiss="modal">Cancel</button>
 
         </form>
-          @endforeach
+          
                 </div>
                  
  <!-- myModal -->

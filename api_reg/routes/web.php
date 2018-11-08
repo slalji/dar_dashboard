@@ -55,13 +55,15 @@ Route::post('/download_nbc', 'PagesController@download_nbc');
 */
 Route::post('/create_keys', 'PagesController@create_keys')->name('create_keys');
 Route::get('/documentation', 'PagesController@documentation');
-Route::get('/documentation/{title}', 'DocumentsController@index')->name('show-doc');
-Route::get('/doc-edit/{title}', 'DocumentsController@edit')->name('edit-doc');
+Route::get('/documentation/{id}', 'DocumentsController@index')->name('show-doc');
+Route::get('/doc-edit/{id}', 'DocumentsController@edit')->name('edit-doc');
 Route::post('/doc-update', 'DocumentsController@update')->name('update-doc');
 Route::get('/param-edit/{id}', 'DocumentsController@editParams')->name('edit-params');
 Route::post('/param-update/{id}', 'DocumentsController@updateParams')->name('update-params');
 Route::post('/param-add/{id}', 'DocumentsController@addParams')->name('add-params');
 Route::get('/guzzle', 'GuzzleController@index')->name('guzzle');
+Route::get('/keys/{id}', 'PagesController@keys')->name('keys');
+Route::get('/save_keys/{id}', 'PagesController@save_keys')->name('save_keys');
 
 Route::group(['middleware' => 'web'], function () {
     Auth::routes();

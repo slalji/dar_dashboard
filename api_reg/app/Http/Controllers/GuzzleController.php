@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
 use App\SelcomAPIClient;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+
 
 class GuzzleController extends Controller {
     
     function index(){
          
-        $api_key = 'YTlPQqZtwB82cgF2';
-        $email = 'shahroze.nawaz@cloudways.com';
-        $selcom_api = new SelcomAPIClient($email,$api_key);
-        $servers = $selcom_api->get_servers();
+        $client = new Client();
+        $res = $client->request('GET', 'http://192.168.1.14:7300/Selcom/request', [
+            'auth' => ['user', 'pass']
+        ]);
         echo '<pre>';
-        var_dump($servers);
+        var_dump($res);
         echo '</pre>';
     }
 }
