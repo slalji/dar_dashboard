@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\SelcomAPIClient;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 
 
 class GuzzleController extends Controller {
@@ -19,12 +20,24 @@ class GuzzleController extends Controller {
         return view('guzzle.index', compact('docs', 'post' )); 
     }
     
-    function try(){
+    function try(Request $request){
+
+       /* echo '<pre>';
+        die(print_r($request->request_body));
+        echo '</pre>';*/
          
-        $client = new Client();
-        $res = $client->request('GET', 'http://192.168.1.14:7300/Selcom/request', [
-            'auth' => ['user', 'pass']
-        ]);
+        $headers = [
+            'Authorization' =>  $request->request_header,        
+            'Accept'        => 'application/json',
+        ];
+        $client = new Client();       
+        
+        $options = [
+            'body' => $request->request_body,
+            'headers' => $headers
+        ];
+        $res = $client->post('http://10.20.0.2:8552/selcomapi', $options);
+
         echo '<pre>';
         var_dump($res);
         echo '</pre>';

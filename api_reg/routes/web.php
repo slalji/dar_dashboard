@@ -61,6 +61,7 @@ Route::post('/doc-update', 'DocumentsController@update')->name('update-doc');
 Route::get('/param-edit/{id}', 'DocumentsController@editParams')->name('edit-params');
 Route::post('/param-update/{id}', 'DocumentsController@updateParams')->name('update-params');
 Route::post('/param-add/{id}', 'DocumentsController@addParams')->name('add-params');
+Route::post('/guzzle-try', 'GuzzleController@try')->name('tryit');
 
 Route::get('/guzzle/{id}', 'GuzzleController@index')->name('guzzle');
 Route::get('/keys/{id}', 'PagesController@keys')->name('keys');

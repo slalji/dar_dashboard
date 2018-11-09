@@ -55,17 +55,21 @@ $( document ).ready(function() {
                    
                         <div class="container">
                         <h1>Try HTTP POST {{$post->title}}</h1>
-        <form id="theForm" action="{{route('update-doc',$post->title)}}" method="post">              
+        <form id="theForm" action="{{route('tryit')}}" method="post">              
     
         <div class="form-group row">        
          
         <div class="form-group">
             {{Form::label('response_success', 'JWT Header')}}
-            {{ Form::textarea('request_header', null, ['placeholder' => 'request_header', 'class' => 'form-control' , 'cols' => 20, 'rows' =>10, 'required' => '', 'maxlength' => "400"]) }} 
+            {{ Form::textarea('request_header', null, ['placeholder' => 'Request Header', 'class' => 'form-control' , 'cols' => 20, 'rows' =>2, 'required' => '', 'maxlength' => "400"]) }} 
         </div>
         <div class="form-group">
             {{Form::label('request_body', 'Request')}}
-            {{ Form::textarea('request_body', $post->request_body, ['placeholder' => 'Your Comment', 'class' => 'form-control' , 'cols' => 20, 'rows' =>10, 'required' => '', 'maxlength' => "400"]) }} 
+            {{ Form::textarea('request_body', $post->request_body, ['placeholder' => 'Request Body', 'class' => 'form-control' , 'cols' => 20, 'rows' =>10, 'required' => '', 'maxlength' => "400"]) }} 
+        </div>
+        <div class="form-group">
+            {{Form::label('request_result', 'Request')}}
+            {{ Form::textarea('request_result', null, ['placeholder' => 'Request Result', 'class' => 'form-control' , 'cols' => 20, 'rows' =>10,  'maxlength' => "400"]) }} 
         </div>
         
         {{ csrf_field() }}
