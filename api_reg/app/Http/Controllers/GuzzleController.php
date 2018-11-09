@@ -12,11 +12,11 @@ class GuzzleController extends Controller {
     
     function index($id){
          
-       /* $post = app('App\Http\Controllers\DocumentsController')->find($id)->first();
+       $post = app('App\Http\Controllers\DocumentsController')->find($id)->first();
          
         $docs = app('App\Http\Controllers\DocumentsController')->selectAll();        
          
-        return view('guzzle.index', compact('docs', 'post' ));*/
+        return view('guzzle.index', compact('docs', 'post' )); 
     }
     
     function try(){

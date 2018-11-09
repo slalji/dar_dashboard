@@ -54,18 +54,18 @@ $( document ).ready(function() {
                     </div>
                    
                         <div class="container">
-                        <h1>Edit {{$post->title}}</h1>
+                        <h1>Try HTTP POST {{$post->title}}</h1>
         <form id="theForm" action="{{route('update-doc',$post->title)}}" method="post">              
     
         <div class="form-group row">        
          
         <div class="form-group">
             {{Form::label('response_success', 'JWT Header')}}
-            {{Form::textarea('response_header',  ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Response Success Payload'])}}
+            {{ Form::textarea('request_header', null, ['placeholder' => 'request_header', 'class' => 'form-control' , 'cols' => 20, 'rows' =>10, 'required' => '', 'maxlength' => "400"]) }} 
         </div>
         <div class="form-group">
             {{Form::label('request_body', 'Request')}}
-            {{Form::textarea('request_body', $post->response_success ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Request Payload'])}}
+            {{ Form::textarea('request_body', $post->request_body, ['placeholder' => 'Your Comment', 'class' => 'form-control' , 'cols' => 20, 'rows' =>10, 'required' => '', 'maxlength' => "400"]) }} 
         </div>
         
         {{ csrf_field() }}
@@ -101,16 +101,7 @@ $( document ).ready(function() {
                 </thead>
                 <tbody>
                  
-                @foreach ($params as $param)
-                    <tr>                     
-                    <td>
-                    {{Form::hidden('doc_id[]', $param->id, ['class' => 'form-control', 'placeholder' => 'id'])}}
-                    {{Form::text('name[]', $param->name, ['class' => 'form-control', 'placeholder' => 'Name'])}}</td>
-                    <td>{{Form::text('datatype[]', $param->datatype, ['size' => '3','class' => 'form-control', 'placeholder' => 'Datatype'])}}</td>
-                    <td>{{Form::text('required[]', $param->required, ['size' => '3','class' => 'form-control', 'placeholder' => 'Required'])}}</td>
-                    <td>{{Form::text('description[]', $param->description, ['class' => 'form-control', 'placeholder' => 'Description'])}}</td>
-                    </tr>
-                @endforeach
+               
                
                 </tbody>
             </table>
@@ -157,14 +148,7 @@ $( document ).ready(function() {
                 <tbody>
                  
                 
-                    <tr>                     
-                    <td>
-                    {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Name'])}}</td>
-                    <td>{{Form::text('datatype', '', ['size' => '3','class' => 'form-control', 'placeholder' => 'Datatype'])}}</td>
-                    <td>{{Form::text('required', '', ['size' => '3','class' => 'form-control', 'placeholder' => 'Required'])}}</td>
-                    <td>{{Form::text('description', '', ['class' => 'form-control', 'placeholder' => 'Description'])}}</td>
-                    </tr>
-                
+                    
                
                 </tbody>
             </table>
